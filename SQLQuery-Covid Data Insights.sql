@@ -80,6 +80,7 @@ ORDER by TotalDeathCount desc
 --North America	1602361
 --South America	1354884
 --Africa 258982
+--Oceania 28398
 
 --What are the counts by High, Upper Middle, Lower Middle, and Lower income?
 
