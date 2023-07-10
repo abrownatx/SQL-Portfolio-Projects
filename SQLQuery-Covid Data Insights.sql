@@ -1,4 +1,4 @@
-/* We will be querying covid data from the "Our World in Data" website. The Covid-19 Deaths dataset was downloaded on July 5, 2023  */
+/* We will be querying Covid-19 data from the "Our World in Data" website. The Covid-19 Deaths dataset was downloaded on July 5, 2023  */
 
 --1) Lets take a look at the data and review its design.
 
