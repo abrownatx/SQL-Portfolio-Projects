@@ -1,4 +1,4 @@
-/* We will be querying covid data from the "Our World in Data" website. More Specifically the Covid-19 Deaths dataset was downloaded on July 5, 2023  */
+/* We will be querying covid data from the "Our World in Data" website. The Covid-19 Deaths dataset was downloaded on July 5, 2023  */
 
 SELECT *
 FROM PortfolioProject..CovidDeaths
