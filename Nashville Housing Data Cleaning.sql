@@ -36,15 +36,15 @@ From PortfolioProject..[dbo.NashvilleHousing]
 
 -- Populate Property Address data
 
-Select propertyAddress
+Select PropertySplitAddress
 From PortfolioProject..[dbo.NashvilleHousing]
-Where PropertyAddress is null
+Where PropertySplitAddress is null
 
 --We have properties that are missing the address
 
 Select *
 From PortfolioProject..[dbo.NashvilleHousing]
-Where PropertyAddress is null
+Where PropertySplitAddress is null
 order by ParcelID
 
 Select *
@@ -56,23 +56,23 @@ order by ParcelID
 --We are going to perform a selfjoin, to do this. (note: <> not equal to)
 --ISNULL statement: if a.propertyaddress is null, we will populate the b. address and insert into null place
 
-Select a.ParcelID, a.PropertyAddress, b.ParcelID, b.PropertyAddress, ISNULL(a.PropertyAddress,b.PropertyAddress) As NewPropertyAddress
+Select a.ParcelID, a.PropertySplitAddress, b.ParcelID, b.PropertySplitAddress, ISNULL(a.PropertySplitAddress,b.PropertySplitAddress) As NewPropertyAddress
 From PortfolioProject..[dbo.NashvilleHousing] a
 JOIN PortfolioProject..[dbo.NashvilleHousing] b
 	on a.ParcelID = b.ParcelID
 	AND a.[UniqueID ] <> b.[UniqueID ]
-Where a.PropertyAddress is null
+Where a.PropertySplitAddress is null
 
 --Revised Statement to update the table to remove the nulls with the NewPropertyAddress
 --Rerun the above statement to show that there are no null addresses since all have an address that has been inserted
 
 Update a
-SET PropertyAddress = ISNULL(a.PropertyAddress,b.PropertyAddress)
+SET PropertySplitAddress = ISNULL(a.PropertySplitAddress,b.PropertySplitAddress)
 From PortfolioProject..[dbo.NashvilleHousing] a
 JOIN PortfolioProject..[dbo.NashvilleHousing] b
 	on a.ParcelID = b.ParcelID
 	AND a.[UniqueID ] <> b.[UniqueID ]
-Where a.PropertyAddress is null
+Where a.PropertySplitAddress is null
 
 
 -------------------------------------------------------------------------------------------------------------------------
@@ -80,7 +80,7 @@ Where a.PropertyAddress is null
 -- Breaking out Address into Individual Columns (Address, City, State)
 
 
-Select PropertyAddress
+Select PropertySplitAddress
 From PortfolioProject..[dbo.NashvilleHousing]
 --Where PropertyAddress is null
 --order by ParcelID
@@ -88,8 +88,8 @@ From PortfolioProject..[dbo.NashvilleHousing]
 --We want to seperate out the address and the city from the results. (Seperate at the delimeter-comma)
 
 SELECT
-SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) -1 ) as Address
-, SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) + 1 , LEN(PropertyAddress)) as Address
+SUBSTRING(PropertySplitAddress, 1, CHARINDEX(',', PropertySplitAddress) -1 ) as Address
+, SUBSTRING(PropertySplitAddress, CHARINDEX(',', PropertySplitAddress) + 1 , LEN(PropertySplitAddress)) as Address
 
 From PortfolioProject..[dbo.NashvilleHousing]
 
@@ -99,14 +99,14 @@ ALTER TABLE [dbo.NashvilleHousing]
 Add PropertySplitAddress Nvarchar(255);
 
 Update [dbo.NashvilleHousing]
-SET PropertySplitAddress = SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) -1 )
+SET PropertySplitAddress = SUBSTRING(PropertySplitAddress, 1, CHARINDEX(',', PropertySplitAddress) -1 )
 
 
 ALTER TABLE [dbo.NashvilleHousing]
 Add PropertySplitCity Nvarchar(255);
 
 Update [dbo.NashvilleHousing]
-SET PropertySplitCity = SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) + 1 , LEN(PropertyAddress))
+SET PropertySplitCity = SUBSTRING(PropertySplitAddress, CHARINDEX(',', PropertySplitAddress) + 1 , LEN(PropertySplitAddress))
 
 --Check the Revisions
 
@@ -115,7 +115,7 @@ From PortfolioProject..[dbo.NashvilleHousing]
 
 --A simpler and more complicated version 
 
-Select OwnerAddress
+Select OwnerSplitAddress
 From PortfolioProject..[dbo.NashvilleHousing]
 
 --PARSENAME is great for values delimted by a specific value  such a period, and so we'll do this on the owneraddress
@@ -123,9 +123,9 @@ From PortfolioProject..[dbo.NashvilleHousing]
 
 
 Select
-PARSENAME(REPLACE(OwnerAddress, ',', '.') , 3)
-,PARSENAME(REPLACE(OwnerAddress, ',', '.') , 2)
-,PARSENAME(REPLACE(OwnerAddress, ',', '.') , 1)
+PARSENAME(REPLACE(OwnerSplitAddress, ',', '.') , 3)
+,PARSENAME(REPLACE(OwnerSplitAddress, ',', '.') , 2)
+,PARSENAME(REPLACE(OwnerSplitAddress, ',', '.') , 1)
 From PortfolioProject..[dbo.NashvilleHousing]
 
 
@@ -133,21 +133,21 @@ ALTER TABLE [dbo.NashvilleHousing]
 Add OwnerSplitAddress Nvarchar(255);
 
 Update [dbo.NashvilleHousing]
-SET OwnerSplitAddress = PARSENAME(REPLACE(OwnerAddress, ',', '.') , 3)
+SET OwnerSplitAddress = PARSENAME(REPLACE(OwnerSplitAddress, ',', '.') , 3)
 
 
 ALTER TABLE [dbo.NashvilleHousing]
 Add OwnerSplitCity Nvarchar(255);
 
 Update [dbo.NashvilleHousing]
-SET OwnerSplitCity = PARSENAME(REPLACE(OwnerAddress, ',', '.') , 2)
+SET OwnerSplitCity = PARSENAME(REPLACE(OwnerSplitAddress, ',', '.') , 2)
 
 
 ALTER TABLE [dbo.NashvilleHousing]
 Add OwnerSplitState Nvarchar(255);
 
 Update [dbo.NashvilleHousing]
-SET OwnerSplitState = PARSENAME(REPLACE(OwnerAddress, ',', '.') , 1)
+SET OwnerSplitState = PARSENAME(REPLACE(OwnerSplitAddress, ',', '.') , 1)
 
 --Check our results
 
@@ -216,7 +216,7 @@ From PortfolioProject..[dbo.NashvilleHousing]
 Select *
 From RowNumCTE
 Where row_num > 1
-Order by PropertyAddress
+Order by PropertySplitAddress
 
 --Since we found that we have 104 rows of duplicates we need to delete them
 
@@ -259,7 +259,7 @@ From PortfolioProject..[dbo.NashvilleHousing]
 Select *
 From RowNumCTE
 Where row_num > 1
-Order by PropertyAddress
+Order by PropertySplitAddress
 
 --We have confirmed that all have been deleted
 
