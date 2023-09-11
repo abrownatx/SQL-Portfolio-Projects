@@ -165,7 +165,7 @@ WHERE dea.continent is not null
 SELECT *, (CummulativeVaccinations/population)*100 AS PercentageVaccinated
 FROM #percentpopulationvaccinated
 
---12) Creating views to store data for Tableau Visulations
+--12) Creating views to store data for Tableau Visulizations
 
 --View 1
 CREATE VIEW TotalDeathCount as
