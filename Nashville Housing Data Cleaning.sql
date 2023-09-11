@@ -61,7 +61,7 @@ From PortfolioProject..[dbo.NashvilleHousing] a
 JOIN PortfolioProject..[dbo.NashvilleHousing] b
 	on a.ParcelID = b.ParcelID
 	AND a.[UniqueID ] <> b.[UniqueID ]
-Where a.PropertySplitAddress is null
+--Where a.PropertySplitAddress is null
 
 --Revised Statement to update the table to remove the nulls with the NewPropertyAddress
 --Rerun the above statement to show that there are no null addresses since all have an address that has been inserted
@@ -72,7 +72,7 @@ From PortfolioProject..[dbo.NashvilleHousing] a
 JOIN PortfolioProject..[dbo.NashvilleHousing] b
 	on a.ParcelID = b.ParcelID
 	AND a.[UniqueID ] <> b.[UniqueID ]
-Where a.PropertySplitAddress is null
+--Where a.PropertySplitAddress is null
 
 
 -------------------------------------------------------------------------------------------------------------------------
