@@ -54,8 +54,8 @@ ORDER BY
 OrderYr OrderCountry	Freq.   Product_Name      
 2015	Francia	        1003	Perfect Fitness Perfect Rip Deck
 2016	United States	3578	Perfect Fitness Perfect Rip Deck
-2017	M̩exico	        924	    Nike Men's CJ Elite 2 TD Football Cleat
-2018	Australia	    144	    Fighting video games
+2017	M̩exico	        924	Nike Men's CJ Elite 2 TD Football Cleat
+2018	Australia	144	Fighting video games
 
 */
 
@@ -243,9 +243,9 @@ GROUP BY
 ORDER BY
     YEAR(Orders.order_date_DateOrders) DESC, ProductCount DESC, Customers.Customer_Segment DESC
 
---In the United States, the consumer segment accounts for the larget amount of goods sold, followed by the corporate and home Office segments. 
+--In the United States, the consumer segment accounts for the larget amount of goods sold, followed by the corporate and home Office segments respectively. 
 
---7) What are the least selling products in the US by year?
+--7) What is the least selling products in the US by year?
 SELECT
     YEAR(Orders.order_date_DateOrders) AS OrderYear,
     Products.Product_Name,
@@ -296,7 +296,7 @@ ORDER BY
 --In 2017, the highest purchases in the US market originated from Brampton, Ontario.
 --In 2016, the highest purchases in the US market originated from New York, USA
 
---9) Where in the US market did the sales originate from (supplier)?
+--9) Where in the US market did the sales originate from (supplier location)?
 
 SELECT
     YEAR(Orders.order_date_DateOrders) AS OrderYear,
@@ -321,7 +321,7 @@ GROUP BY
 ORDER BY
     OrderYear DESC, Products.Product_Name, ProductCount DESC, Customers.Customer_City, TotalSales DESC, TotalOrderProfit DESC, Customers.Customer_Segment DESC;
 
---Caguas, Puerto Rico is accounting for a large swath of sales.
+--Caguas, Puerto Rico is accounting for the largest swath of sales.
 
 --10) 2016 US City purchases and product of interest
 
